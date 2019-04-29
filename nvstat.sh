@@ -1,6 +1,6 @@
 #!/bin/bash
 echo -e "\e[94m #:Bus  Pwr PL  PM  PS  CU MU F  T  Core CM   Mem  MM   Name  \e[0m"
-R=`nvidia-smi --query-gpu=index,pci.bus,pstate,power.draw,fan.speed,temperature.gpu,utilization.gpu,clocks.sm,clocks.max.sm,clocks.mem,clocks.max.memory,gpu_name,utilization.memory,power.limit,power.max_l$
+R=`nvidia-smi --query-gpu=index,pci.bus,pstate,power.draw,fan.speed,temperature.gpu,utilization.gpu,clocks.sm,clocks.max.sm,clocks.mem,clocks.max.memory,gpu_name,utilization.memory,power.limit,power.max_limit --format=csv`
 INDEX=0
 readarray GPUNAMES < <(lspci -vnn | grep VGA -A 12  | grep Subsystem | cut -c 13-)
 COLWIDTH=`stty size | cut -d ' ' -f 2`
@@ -80,7 +80,7 @@ then
 else
     gpuTempClr="\e[92m$gpuTemp\e[0m"
 fi;
-                row="\e[90m$gpuIndex:${lineResult[1]}\e[0m $watt \e[37m$wattLim $wattMax\e[0m ${lineResult[2]} $usage $usageMem $fan $gpuTempClr $currentCoreSpeed \e[37m$maxCoreSpeed\e[0m $currentMemSpeed$
+                row="\e[90m$gpuIndex:${lineResult[1]}\e[0m $watt \e[37m$wattLim $wattMax\e[0m ${lineResult[2]} $usage $usageMem $fan $gpuTempClr $currentCoreSpeed \e[37m$maxCoreSpeed\e[0m $currentMemSpeed\e[37m $maxMemSpeed\e[0m \e[90m$gpuName\e[0m"
                 rowWidthCtr=`echo -n $row | wc -c`
                 rowWidthChr=`echo -e $row | wc -c`
                 ctrLength=$(($rowWidthCtr-$rowWidthChr))
