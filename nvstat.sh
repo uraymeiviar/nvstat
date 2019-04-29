@@ -22,7 +22,7 @@ echo "$R" | while read line ; do
                 watt=${watt// W/}
                 watt=`printf "%3.0f" $watt`
                 wattLim=${lineResult[13]}
-                wattLim=${watt// W/}
+                wattLim=${wattLim// W/}
                 wattLim=`printf "%3.0f" $wattLim`
                 wattMax=${lineResult[14]}
                 wattMax=${wattMax// W/}
